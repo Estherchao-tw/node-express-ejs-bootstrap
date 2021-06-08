@@ -1,0 +1,64 @@
+//test.ejs
+//testing database connect 
+<html>
+  <head>
+    <h1>test model</h1>
+  </head>
+  <body>
+    <header>
+      <h1 class="text-light"><a href="./index.html"><span><%= title %></span></a></h1>
+    </header>
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+          <h2>daily</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row" data-aos="fade-in">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="daily-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-location">location</li>
+              <li data-filter=".filter-gender">gender</li>
+              <li data-filter=".filter-locally">locally</li>
+            </ul>
+          </div>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>date</th>
+              <th>city</th>
+              <th>location</th>
+              <th>gender</th>
+              <th>locally</th>
+              <th>age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0; i < data.length; i++){ %>
+            <tr>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].date %></td>
+            <td><%= data[i].city %></td>
+            <td><%= data[i].location %></td>
+            <td><%= data[i].gender %></td>
+            <td><%= data[i].locally %></td>
+            <td><%= data[i].age %></td>
+            <td>
+            <a href="#" class="btn btn-secondary">
+            <i class="fas fa-angle-double-right"></i>
+            Details
+            </a>
+            </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      
+  </body>
+</html>
