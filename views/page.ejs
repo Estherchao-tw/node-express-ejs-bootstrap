@@ -1,0 +1,88 @@
+<%- include('header') %>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script type="text/javascript" src="../routes/page.js"></script>
+ <table border='1' cellspacing='0' cellpadding='5'>
+        <tr>
+            <th>Number</th>
+                <th scope="col">#</th>
+                <th scope="col">date</th>
+                <th scope="col">city</th>
+                <th scope="col">location</th>
+                <th scope="col">gender</th>
+                <th scope="col">locally</th>
+                <th scope="col">age</th>
+        </tr>
+       <tbody>
+              <% for(let i=0; i < data.length; i++){ %>
+                <tr>
+                  <td scope="row" class=" daily-item"><%= data[i].id %></td>
+                  <td class=" daily-item"><%= data[i].date %></td>
+                  <td class=" daily-item"><%= data[i].city %></td>
+                  <td class=" daily-item filter-location"><%= data[i].location %></td>
+                  <td class=" daily-item filter-gender"><%= data[i].gender %></td>
+                  <td class=" daily-item filter-locally"><%= data[i].locally %></td>
+                  <td class=" daily-item"><%= data[i].age %></td>
+                  <td>
+                    <a href="#" class="btn btn-secondary">
+                      <i class="fas fa-angle-double-right"></i>
+                      Details
+                    </a>
+                  </td>
+                </tr>
+                <% } %>
+            </tbody>
+    </table>
+    <section>
+      <div>
+        <p class="btn btn-primary" id='prev'>Previous page</p>
+        <p class="btn btn-primary" id='next'>Next page</p>
+        
+      </div>
+      目前頁面: <span id="pages">頁面</span>
+            <button type="button"  class="btn btn-primary"> limit</button>
+
+    </section>
+<script>
+ var count=count;// Total number
+ var page=page; // current page number
+
+ // Get the location of the page
+var pages=document.getElementById('pages');
+var prev=document.getElementById('prev');
+var next=document.getElementById('next');
+
+ // Generate page number 22=>5
+function createPages() {
+    pages.innerHTML='';
+    for(var i=0;i<Math.ceil(count/5);i++){
+        pages.innerHTML+=`<button class="btn" json-page="${i}">${i+1}</button>`;
+    }
+}
+createPages()
+
+ // Click the button to turn the page
+
+$('.btn').click (function(){
+    let page=$(this).attr('json-page');
+    window.location.href='/?page='+page;
+});
+
+ // Click on the previous page
+prev.onclick=function(){
+    if(page>=1){
+        page--;
+        window.location.href='/?page='+page;
+    }
+}
+
+ // click next page
+next.onclick=function(){
+    if(page<Math.ceil(count/5)-1){
+        page++;
+        window.location.href='/?page='+page;
+    } 
+}
+
+</script>
+    
+<%- include('footer') %>

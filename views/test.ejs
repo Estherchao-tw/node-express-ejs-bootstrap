@@ -1,64 +1,105 @@
-//test.ejs
-//testing database connect 
-<html>
-  <head>
-    <h1>test model</h1>
-  </head>
-  <body>
-    <header>
-      <h1 class="text-light"><a href="./index.html"><span><%= title %></span></a></h1>
-    </header>
-      <div class="container">
+<%- include('header') %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.18/c3.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.18/c3.js"></script>
+<link rel='stylesheet' href='/stylesheets/style.css' />
 
-        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-          <h2>daily</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
+<h2>2020年每個月確診人數 </h2>
 
-        <div class="row" data-aos="fade-in">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="daily-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-location">location</li>
-              <li data-filter=".filter-gender">gender</li>
-              <li data-filter=".filter-locally">locally</li>
-            </ul>
-          </div>
-        </div>
+<!-- 分頁導覽列 -->
+<ul class="pagination">
+  <li> <%=items.pageNo%> </li>
 
-        <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>date</th>
-              <th>city</th>
-              <th>location</th>
-              <th>gender</th>
-              <th>locally</th>
-              <th>age</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for(let i=0; i < data.length; i++){ %>
-            <tr>
-            <td><%= data[i].id %></td>
-            <td><%= data[i].date %></td>
-            <td><%= data[i].city %></td>
-            <td><%= data[i].location %></td>
-            <td><%= data[i].gender %></td>
-            <td><%= data[i].locally %></td>
-            <td><%= data[i].age %></td>
-            <td>
-            <a href="#" class="btn btn-secondary">
-            <i class="fas fa-angle-double-right"></i>
-            Details
-            </a>
-            </td>
-            </tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
+  <% if(items.startPage>1){ %>
+  <li><a href="/fetch/<%=(items.startPage-items.navSegments)%>">...</a></li>
+  <% } %>
+
+  <% for(var i=items.startPage; i< (items.startPage+items.navSegments); i++) {%>
+  <% if(i<=items.totalPage){ %>
+  <li><a href="/fetch/<%=i%>"><%=i%></a></li>
+  <% } %>
+  <% } %>
+
+  <% if(items.startPage+items.navSegments<=items.totalPage){ %>
+  <li><a href="/fetch/<%=(items.startPage+items.navSegments)%>">...</a></li>
+  <% } %>
+</ul>
+
+<!-- 顯示資料表格 -->
+<table>
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>人數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(var i=0; i<items.data.length; i++) {%>
+    <tr>
+      <td><%= items.data[i].months %></td>
+      <td><%= items.data[i].total %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+  <h4 id="svg_line">線性折線圖</h4>
+  <p>...</p>
+  <div id="today">
+    <svg>
+      <path></path>
+    </svg>
+  </div>
+  <h4 id="svg_line">線性折線圖</h4>
+  <p>...</p>
+  <div id="graph">
+    <svg>
+      <path />
+    </svg>
+  </div>
+<script>
+  let height = 300;
+  let width = 600;
+  var padding = 30;
+  let dataset;
+  var scale = d3.scaleLinear().domain([50,350]).range([0,100]);
+  console.log(scale(320));
+  
+  function buildLineChart() {
+    
+   var lineFunc = d3
+      .line()
+      .x((d) => xScale(xAccessor(d)))
+      .y((d) => yScale(yAccessor(d)))
+      .curve(d3.curveBasis);
+    console.log(lineFunc(dataset));
+    var svg = d3.select("#today").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+
+    var viz = svg.append("path")
+      .data([dataset])
+      .attr("d", lineFunc)
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+  }
+  
+  
+   d3.json('/linedata.json').then(function (data) {
+      console.log(data);
+      dataset = data;
       
-  </body>
-</html>
+      buildLineChart();
+     } );
+
+  d3.select('#graph').append('svg');
+  var svg = d3.select('#graph').append('svg');
+  var lineData = [{ x: 50, y:110 },{ x: 100, y:60 }, { x: 170, y:80 }, { x: 240, y : 20 }];
+  var drawLine = d3.line()
+  .x(function (d) { return d.x; })
+  .y(function (d) { return d.y; })
+  console.log(drawLine(lineData))
+  svg.append('path').attr('d', drawLine(lineData));
+ 
+</script>
+<%- include('footer') %>

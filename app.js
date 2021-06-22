@@ -6,8 +6,13 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var testRouter = require('./routes/test');
+var testRouter = require('./routes/month');
 var coronavirusRouter = require('./routes/coronavirus');
+var paginationRouter = require('./routes/pagination');
+var homeRouter = require('./routes/home');
+var pageRouter = require('./routes/page');
+var fetchRouter = require('./routes/fetch');
+var d3Router = require('./routes/d3');
 
 var app = express();
 
@@ -25,9 +30,20 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/coronavirus', coronavirusRouter);
 app.use('/test', testRouter);
+app.use('/pagination', paginationRouter);
+app.use('/home', homeRouter);
+app.use('/page', pageRouter);
+app.use('/fetch', fetchRouter);
+app.use('/d3', d3Router);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  var rightNow = new Date();
+  var res = rightNow.toISOString().slice(0,10);
+  console.log("Time:",res);
+  console.log('Request URL:', req.originalUrl);
+  console.log('Request Type:', req.method);
   next(createError(404));
 });
 
