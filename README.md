@@ -14,4 +14,4 @@
 
 ![image](https://github.com/maxinechao/node-express-ejs-bootstrap/blob/main/%E7%A2%BA%E8%A8%BA%E4%BA%BA%E6%95%B8%E8%A9%B3%E7%B4%B0%E8%B3%87%E6%96%99%E8%A1%A8.jpg)
 
-確診人數詳細資料表.jpg
+確診人數詳細資料表
