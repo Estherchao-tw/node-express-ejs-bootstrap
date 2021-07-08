@@ -5,11 +5,11 @@
 <link rel='stylesheet' href='/stylesheets/style.css' />
 
 <h2>2020年每個月確診人數 </h2>
-
+<p>按數字顯示確診人員資料 </p>
 <!-- 分頁導覽列 -->
 <ul class="pagination">
-  <li> <%=items.pageNo%> </li>
-
+  
+  <p></p>
   <% if(items.startPage>1){ %>
   <li><a href="/fetch/<%=(items.startPage-items.navSegments)%>">...</a></li>
   <% } %>
@@ -42,13 +42,7 @@
     <% } %>
   </tbody>
 </table>
-  <h4 id="svg_line">線性折線圖</h4>
-  <p>...</p>
-  <div id="today">
-    <svg>
-      <path></path>
-    </svg>
-  </div>
+
   <h4 id="svg_line">線性折線圖</h4>
   <p>...</p>
   <div id="graph">

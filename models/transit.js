@@ -1,3 +1,4 @@
+//read and write JSON file using Node.js
 const DailyDataTest = require("../models/monthModel");
 
 const fs = require('fs');

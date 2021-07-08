@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
   }
 
   DailyDataTest.fetchPage(pageNo).then((rows) => {
-    console.log("222");
+    console.log(rows.totalPage);
 
 
     if (rows.data.length > 0) {
